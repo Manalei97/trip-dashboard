@@ -42,6 +42,7 @@ import Trips from "layouts/trips";
 
 // @mui icons
 import Icon from "@mui/material/Icon";
+import AddTrip from "layouts/trips/AddTrip";
 
 const routes = [
   {
@@ -51,6 +52,7 @@ const routes = [
     icon: <Icon fontSize="small">dashboard</Icon>,
     route: "/dashboard",
     component: <Dashboard />,
+    sidenav:true,
   },
   {
     type: "collapse",
@@ -59,6 +61,16 @@ const routes = [
     icon: <Icon fontSize="small">forest</Icon>,
     route: "/trips",
     component: <Trips />,
+    sidenav:true,
+  },
+  {
+    type: "collapse",
+    name: "Add Trip",
+    key: "Add-trip",
+    icon: <Icon fontSize="small">forest</Icon>,
+    route: "/trips/add",
+    component: <AddTrip />,
+    sidenav:false,
   },
   {
     type: "collapse",
@@ -67,6 +79,7 @@ const routes = [
     icon: <Icon fontSize="small">table_view</Icon>,
     route: "/tables",
     component: <Tables />,
+    sidenav:true,
   },
   {
     type: "collapse",
@@ -75,6 +88,7 @@ const routes = [
     icon: <Icon fontSize="small">receipt_long</Icon>,
     route: "/billing",
     component: <Billing />,
+    sidenav:true,
   },
   {
     type: "collapse",
@@ -83,6 +97,7 @@ const routes = [
     icon: <Icon fontSize="small">format_textdirection_r_to_l</Icon>,
     route: "/rtl",
     component: <RTL />,
+    sidenav:true,
   },
   {
     type: "collapse",
@@ -91,6 +106,7 @@ const routes = [
     icon: <Icon fontSize="small">notifications</Icon>,
     route: "/notifications",
     component: <Notifications />,
+    sidenav:true,
   },
   {
     type: "collapse",
@@ -99,6 +115,7 @@ const routes = [
     icon: <Icon fontSize="small">person</Icon>,
     route: "/profile",
     component: <Profile />,
+    sidenav:true,
   },
   {
     type: "collapse",
@@ -107,6 +124,7 @@ const routes = [
     icon: <Icon fontSize="small">login</Icon>,
     route: "/authentication/sign-in",
     component: <SignIn />,
+    sidenav:true,
   },
   {
     type: "collapse",
@@ -115,6 +133,7 @@ const routes = [
     icon: <Icon fontSize="small">assignment</Icon>,
     route: "/authentication/sign-up",
     component: <SignUp />,
+    sidenav:true,
   },
 ];
 
