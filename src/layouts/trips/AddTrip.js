@@ -8,7 +8,7 @@ import dayjs from "dayjs";
 import Icon from "@mui/material/Icon";
 
 // import { PhotoCamera } from "@mui/icons-material";
-import { useRef, useState } from "react";
+import { useState } from "react";
 
 const { default: DashboardLayout } = require("examples/LayoutContainers/DashboardLayout");
 
@@ -16,16 +16,17 @@ const { default: DashboardLayout } = require("examples/LayoutContainers/Dashboar
 
 
 function AddTrip() {
-    const titleRef = useRef()
-    const costRef = useRef()
+    // const titleRef = useRef()
+    // const costRef = useRef()
     const [tripDate, setTripDate] = useState('')
-    const addTrip = async () => {
-        const title = titleRef.current.querySelector('input').value
-        const cost = costRef.current.querySelector('input').value
-        let tripData = new FormData()
-        tripData.append('title', title)
-        tripData.append('cost', cost)
-        tripData.append('date', tripDate)
+    const addTrip = async (event) => {
+        event.preventDefault()
+        // const title = titleRef.current.querySelector('input').value
+        // const cost = costRef.current.querySelector('input').value
+        let tripData = new FormData(event.target)
+        // tripData.append('title', title)
+        // tripData.append('cost', cost)
+        // tripData.append('date', tripDate)
         await fetch('http://localhost:3001/trips', {
             method: 'POST',
             body: tripData
@@ -40,55 +41,40 @@ function AddTrip() {
             <Grid container spacing={6}>
                 <Grid item xs={12}>
                     <Card>
+                        <form method="post" onSubmit={addTrip}>
                         <MDBox p={3}>
-                            <MDTypography variant='h5'>
-                                Add New Trip
-                            </MDTypography>
+                            <MDTypography variant='h5'>Add New Trip</MDTypography>
                             <MDBox pt={4} pb={2}>
-                                <MDBox mb={3}>
-                                    <TextField fullWidth label='Trip Title' ref={titleRef} />
-                                </MDBox>
-                                <MDBox mb={3}>
-                                    <TextField fullWidth label='Trip Cost' ref={costRef} />
-                                </MDBox>
+                                <MDBox mb={3}><TextField name="title" fullWidth label="Trip Title"  /></MDBox>
+                                <MDBox mb={3}><TextField name = "cost" fullWidth label="Trip Cost"  /></MDBox>
                                 <MDBox mb={3}>
                                     <LocalizationProvider dateAdapter={AdapterDayjs}>
                                         <DateTimePicker
-                                            renderInput={(props) => <TextField fullWidth {...props} />}
+                                        value={tripDate}
+                                            renderInput={(props) => <TextField name="date" fullWidth {...props} />}
                                             label="Trip Date"
+                                            inputFormat="YYYY-MM-DD HH:mm:ss"
+                                            mask="_//_ :_::_"
+
                                             onChange={(newValue) => {
-                                                // setValue(newValue);
                                                 setTripDate(dayjs(newValue).format("YYYY-MM-DD HH:mm:ss"))
                                             }}
                                         />
                                     </LocalizationProvider>
                                 </MDBox>
                                 <MDBox mb={3}>
-                                    {/* <Button variant="containes" component="label" color='primary'>
-                                            <MDTypography color='' */}
-                                    {/* <IconButton color="primary" aria-label="upload picure" component="label"> */}
-                                    {/* // <input hidden accept="image/*" type="file" multiple/> */}
-                                    {/* <PhotoCamera/> */}
-
-                                    {/* </IconButton> */}
-                                    {/* <input type='file '/> */}
-                                    {/* </Button> */}
-                                    <Button variant='contained' color='primary'>
-                                        <MDTypography color='white' variant='p'>
+                                    <Button variant="contained" component="label" color='primary'>
+                                        <MDTypography color='white' variant="p">
                                             <Grid container spacing={1}>
-                                                <Grid item>
-                                                    <Icon>photo_library</Icon>
-                                                </Grid>
-                                                <Grid item>
-                                                    Upload Photos
-                                                </Grid>
+                                                <Grid item><Icon>photo_library</Icon></Grid>
+                                                <Grid item>Upload Photos</Grid>
                                             </Grid>
                                         </MDTypography>
-                                        <input hidden accept='image/*' type='file' id='trip-photos' multiple />
-                                    </Button >
+                                        <input hidden accept="image/*"name="photo"  multiple type="file" />
+                                    </Button>
                                 </MDBox>
                                 <MDBox>
-                                    <Button variant="contained" type="button" onClick={addTrip}>
+                                    <Button variant="contained" type="submit">
                                         <MDTypography color='white' variant="p">
                                             Add Trip
                                         </MDTypography>
@@ -96,6 +82,7 @@ function AddTrip() {
                                 </MDBox>
                             </MDBox>
                         </MDBox>
+                        </form>
                     </Card>
                 </Grid>
             </Grid>
